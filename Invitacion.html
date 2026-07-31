@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invitación de Boda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+        /* RESET y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #A2C1EB;
+            /* fondo base, se superpondrá el patrón */
+            font-family: 'Quicksand', sans-serif;
+            padding: 20px;
+            /* el fondo floral se asigna con JS */
+            background-size: 150px 150px;
+            background-repeat: repeat;
+        }
+
+        /* Tarjeta principal */
+        .invitation-card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 50px 45px;
+            box-shadow: 0 12px 40px rgba(140, 170, 200, 0.15), 0 4px 16px rgba(140, 170, 200, 0.08);
+            border: 1px solid rgba(210, 225, 240, 0.4);
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Decoración superior: línea con flores */
+        .divider-flowers {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            color: #b3ccdd;
+            font-size: 20px;
+            letter-spacing: 6px;
+        }
+        .divider-flowers .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #c4d7e8, transparent);
+        }
+        .divider-flowers .flower-icon {
+            font-size: 22px;
+            color: #b8d0de;
+            opacity: 0.7;
+        }
+
+        /* Título */
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.4rem;
+            text-align: center;
+            color: #2c4a5e;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .title-sub {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1rem;
+            text-align: center;
+            color: #7a9bb3;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+        }
+
+        /* Cuerpo del texto */
+        .invitation-text {
+            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #3e5a6b;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .invitation-text strong {
+            font-weight: 500;
+            color: #2c4a5e;
+        }
+
+        /* Cita o frase destacada */
+        .highlight {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.15rem;
+            color: #54758b;
+            margin: 18px 0 22px;
+            padding: 0 10px;
+            border-left: 3px solid #cfe1ef;
+            border-right: 3px solid #cfe1ef;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        /* Horario */
+        .schedule {
+            background: rgba(207, 225, 239, 0.25);
+            border-radius: 40px;
+            padding: 14px 28px;
+            display: inline-block;
+            margin: 12px auto 20px;
+            font-weight: 400;
+            font-size: 1.05rem;
+            color: #2c4a5e;
+            border: 1px solid rgba(190, 212, 228, 0.3);
+            letter-spacing: 0.3px;
+        }
+        .schedule .time {
+            font-weight: 600;
+            color: #1f3a4a;
+        }
+
+        /* Atte */
+        .signature {
+            margin-top: 32px;
+            text-align: center;
+            font-weight: 300;
+            font-size: 1.05rem;
+            color: #4d6f84;
+            letter-spacing: 1px;
+        }
+        .signature .names {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #2c4a5e;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+
+        /* Separador inferior */
+        .divider-bottom {
+            margin-top: 28px;
+            text-align: center;
+            color: #c4d7e8;
+            font-size: 18px;
+            letter-spacing: 4px;
+            opacity: 0.6;
+        }
+
+        /* Ajustes responsive */
+        @media (max-width: 600px) {
+            .invitation-card {
+                padding: 30px 22px;
+                border-radius: 20px;
+            }
+            .title {
+                font-size: 1.8rem;
+            }
+            .invitation-text {
+                font-size: 1rem;
+            }
+            .schedule {
+                font-size: 0.95rem;
+                padding: 10px 20px;
+            }
+            .signature .names {
+                font-size: 1.1rem;
+            }
+            .divider-flowers {
+                font-size: 16px;
+                gap: 8px;
+            }
+        }
+        @media (max-width: 400px) {
+            .invitation-card {
+                padding: 22px 16px;
+            }
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invitation-card">
+
+        <!-- Divisor superior con flores -->
+        <div class="divider-flowers">
+            <span class="line"></span>
+            <span class="flower-icon">❀</span>
+            <span class="flower-icon">✿</span>
+            <span class="flower-icon">❀</span>
+            <span class="line"></span>
+        </div>
+
+        <!-- Título -->
+        <h1 class="title">Ceremonia que unirá dos familias</h1>
+        <div class="title-sub">— unión de corazones —</div>
+
+        <!-- Texto de invitación -->
+        <p class="invitation-text">
+            El destino tejió sus hilos y el amor unió sus caminos.<br />
+            Con inmensa alegría y gratitud, les invitamos cordialmente a ser parte de la unión de dos almas que se complementan y dos familias que se entrelazan.
+        </p>
+
+        <!-- Horario -->
+        <div style="text-align: center;">
+            <div class="schedule">
+                ⏤ <span class="time">7:00 pm</span> · hora Colombia ⏤
+            </div>
+            <p class="invitation-text" style="font-size: 0.95rem; margin-top: 6px;">
+                Agradeceremos su asistencia y permanencia en dicho evento
+            </p>
+        </div>
+
+        <!-- Firma -->
+        <div class="signature">
+            Atentamente,
+            <span class="names">Onyx D Santi's y Eclipse Spirit</span>
+        </div>
+
+        <!-- Divisor inferior sutil -->
+        <div class="divider-bottom">✦ ✦ ✦</div>
+
+    </div>
+
+    <script>
+        // SVG con patrón floral en colores fríos y pastel
+        const svgPattern = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+                <defs>
+                    <!-- Flor tipo 1: menta + centro rosa -->
+                    <g id="flor1">
+                        <circle cx="0" cy="-12" r="7" fill="#d4e9e2" opacity="0.45"/>
+                        <circle cx="11" cy="-4" r="7" fill="#d4e9e2" opacity="0.45"/>
+                        <circle cx="7" cy="10" r="7" fill="#d4e9e2" opacity="0.45"/>
+                        <circle cx="-7" cy="10" r="7" fill="#d4e9e2" opacity="0.45"/>
+                        <circle cx="-11" cy="-4" r="7" fill="#d4e9e2" opacity="0.45"/>
+                        <circle cx="0" cy="0" r="4" fill="#f5e6e8" opacity="0.6"/>
+                    </g>
+                    <!-- Flor tipo 2: lavanda + centro azul claro -->
+                    <g id="flor2">
+                        <circle cx="0" cy="-10" r="6" fill="#e6d3e6" opacity="0.4"/>
+                        <circle cx="9" cy="-3" r="6" fill="#e6d3e6" opacity="0.4"/>
+                        <circle cx="6" cy="8" r="6" fill="#e6d3e6" opacity="0.4"/>
+                        <circle cx="-6" cy="8" r="6" fill="#e6d3e6" opacity="0.4"/>
+                        <circle cx="-9" cy="-3" r="6" fill="#e6d3e6" opacity="0.4"/>
+                        <circle cx="0" cy="0" r="3.5" fill="#c5d9e8" opacity="0.6"/>
+                    </g>
+                    <!-- Flor tipo 3: rosa pálido + centro menta -->
+                    <g id="flor3">
+                        <circle cx="0" cy="-9" r="5.5" fill="#f5e6e8" opacity="0.4"/>
+                        <circle cx="8" cy="-2" r="5.5" fill="#f5e6e8" opacity="0.4"/>
+                        <circle cx="5" cy="7" r="5.5" fill="#f5e6e8" opacity="0.4"/>
+                        <circle cx="-5" cy="7" r="5.5" fill="#f5e6e8" opacity="0.4"/>
+                        <circle cx="-8" cy="-2" r="5.5" fill="#f5e6e8" opacity="0.4"/>
+                        <circle cx="0" cy="0" r="3" fill="#d4e9e2" opacity="0.6"/>
+                    </g>
+                    <!-- Hojita sutil -->
+                    <g id="hoja">
+                        <ellipse cx="0" cy="0" rx="6" ry="3" fill="#d4e9e2" opacity="0.25" transform="rotate(-30)"/>
+                    </g>
+                </defs>
+
+                <!-- Distribución de flores en el patrón de 150x150 -->
+                <use href="#flor1" x="25" y="25" transform="scale(0.8) rotate(0, 25, 25)"/>
+                <use href="#flor2" x="100" y="30" transform="scale(0.9) rotate(20, 100, 30)"/>
+                <use href="#flor3" x="70" y="100" transform="scale(0.7) rotate(-15, 70, 100)"/>
+                <use href="#flor1" x="10" y="110" transform="scale(0.6) rotate(40, 10, 110)"/>
+                <use href="#flor2" x="120" y="110" transform="scale(0.8) rotate(10, 120, 110)"/>
+                <use href="#flor3" x="70" y="15" transform="scale(0.7) rotate(-30, 70, 15)"/>
+                <use href="#flor1" x="130" y="70" transform="scale(0.6) rotate(25, 130, 70)"/>
+                <use href="#flor2" x="20" y="80" transform="scale(0.8) rotate(-10, 20, 80)"/>
+                <use href="#flor3" x="45" y="135" transform="scale(0.65) rotate(55, 45, 135)"/>
+                <use href="#flor1" x="115" y="135" transform="scale(0.7) rotate(-20, 115, 135)"/>
+                <use href="#flor2" x="140" y="20" transform="scale(0.55) rotate(35, 140, 20)"/>
+                <use href="#flor3" x="5" y="45" transform="scale(0.6) rotate(10, 5, 45)"/>
+
+                <!-- Algunas hojas dispersas -->
+                <use href="#hoja" x="45" y="45" transform="rotate(20, 45, 45)"/>
+                <use href="#hoja" x="110" y="80" transform="rotate(-40, 110, 80)"/>
+                <use href="#hoja" x="30" y="95" transform="rotate(70, 30, 95)"/>
+                <use href="#hoja" x="130" y="40" transform="rotate(-15, 130, 40)"/>
+            </svg>
+        `;
+
+        // Codificar y establecer como fondo del body
+        const encoded = encodeURIComponent(svgPattern);
+        document.body.style.backgroundImage = `url("data:image/svg+xml,${encoded}")`;
+        document.body.style.backgroundSize = '150px 150px';
+        document.body.style.backgroundRepeat = 'repeat';
+    </script>
+
+</body>
+</html>

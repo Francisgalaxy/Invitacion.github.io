@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Invitación de Boda - Onyx & Eclipse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,6 @@
 
         body {
             min-height: 100vh;
-            /* Centrado vertical con flex, pero permitiendo scroll */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -29,8 +28,7 @@
                 radial-gradient(ellipse at 50% 20%, #1f0a30 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 80%, #1f0a30 0%, transparent 50%);
             font-family: 'Cormorant Garamond', serif;
-            padding: 30px 20px;
-            /* Permite scroll cuando el contenido excede la altura */
+            padding: 30px 16px;
             overflow-y: auto;
             position: relative;
         }
@@ -51,8 +49,18 @@
             opacity: 0;
             will-change: transform, opacity;
             animation: floatParticle linear infinite;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
             user-select: none;
+        }
+
+        /* En móviles quitamos sombras y reducimos el brillo para mejor rendimiento */
+        @media (max-width: 600px) {
+            .particle {
+                text-shadow: none !important;
+                font-size: 0.9rem !important;
+            }
+            #particles {
+                opacity: 0.7;
+            }
         }
 
         @keyframes floatParticle {
@@ -61,13 +69,13 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.7;
+                opacity: 0.6;
             }
             90% {
-                opacity: 0.7;
+                opacity: 0.6;
             }
             100% {
-                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0.5);
+                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0.4);
                 opacity: 0;
             }
         }
@@ -81,15 +89,14 @@
             background: linear-gradient(145deg, #160321 0%, #220b38 40%, #1a0628 100%);
             border: 2px solid rgba(212, 175, 55, 0.35);
             border-radius: 32px;
-            padding: 48px 40px 40px;
+            padding: 40px 30px 32px;
             box-shadow:
                 0 30px 80px rgba(0, 0, 0, 0.8),
                 0 0 0 1px rgba(212, 175, 55, 0.15) inset,
                 0 0 60px rgba(212, 175, 55, 0.06);
-            transition: all 0.3s ease;
             backdrop-filter: blur(2px);
-            /* Evita que la tarjeta se encoja en flex */
             flex-shrink: 0;
+            transition: padding 0.3s ease;
         }
 
         .invitation::before {
@@ -105,7 +112,7 @@
         /* ── Decoración de esquinas florales ── */
         .corner-deco {
             position: absolute;
-            font-size: 2.4rem;
+            font-size: 2rem;
             color: rgba(212, 175, 55, 0.25);
             line-height: 1;
             pointer-events: none;
@@ -113,114 +120,110 @@
             text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
             letter-spacing: 2px;
         }
-        .corner-deco.tl {
-            top: 14px;
-            left: 18px;
-            transform: rotate(0deg);
-        }
-        .corner-deco.tr {
-            top: 14px;
-            right: 18px;
-            transform: rotate(90deg);
-        }
-        .corner-deco.bl {
-            bottom: 14px;
-            left: 18px;
-            transform: rotate(-90deg);
-        }
-        .corner-deco.br {
-            bottom: 14px;
-            right: 18px;
-            transform: rotate(180deg);
+        .corner-deco.tl { top: 14px; left: 18px; transform: rotate(0deg); }
+        .corner-deco.tr { top: 14px; right: 18px; transform: rotate(90deg); }
+        .corner-deco.bl { bottom: 14px; left: 18px; transform: rotate(-90deg); }
+        .corner-deco.br { bottom: 14px; right: 18px; transform: rotate(180deg); }
+
+        @media (max-width: 600px) {
+            .corner-deco { font-size: 1.4rem; }
+            .corner-deco.tl { top: 10px; left: 12px; }
+            .corner-deco.tr { top: 10px; right: 12px; }
+            .corner-deco.bl { bottom: 10px; left: 12px; }
+            .corner-deco.br { bottom: 10px; right: 12px; }
         }
 
-        /* ── Sello / escudo superior ── */
+        /* ── Sello ── */
         .seal {
             display: flex;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             position: relative;
         }
         .seal-icon {
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             color: #d4af37;
-            text-shadow:
-                0 0 30px rgba(212, 175, 55, 0.3),
-                0 0 60px rgba(212, 175, 55, 0.1);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
             background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.08), transparent 70%);
-            padding: 0 20px;
+            padding: 0 16px;
             border-radius: 50%;
             line-height: 1.2;
             letter-spacing: 6px;
             font-family: 'Great Vibes', cursive;
+        }
+        @media (max-width: 600px) {
+            .seal-icon { font-size: 2.2rem; letter-spacing: 4px; }
         }
 
         /* ── Título ── */
         .title {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-align: center;
             color: #f4e6c9;
-            text-shadow:
-                0 2px 30px rgba(212, 175, 55, 0.2),
-                0 0 60px rgba(212, 175, 55, 0.05);
+            text-shadow: 0 2px 30px rgba(212, 175, 55, 0.2);
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 6px;
-            position: relative;
+            margin-bottom: 4px;
         }
         .title span {
             color: #d4af37;
-            text-shadow:
-                0 0 20px rgba(212, 175, 55, 0.3),
-                0 0 60px rgba(212, 175, 55, 0.1);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        @media (max-width: 600px) {
+            .title { font-size: 1.6rem; letter-spacing: 1px; }
+        }
+        @media (max-width: 400px) {
+            .title { font-size: 1.3rem; }
         }
 
-        /* línea divisora dorada */
-        .divider {
+        /* ── Divisor floral ── */
+        .floral-divider {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            margin: 12px auto 14px;
-            max-width: 320px;
+            gap: 8px;
+            margin: 6px 0 8px;
+            opacity: 0.3;
         }
-        .divider-line {
-            flex: 1;
+        .floral-divider .flower { font-size: 1rem; color: #d4af37; }
+        .floral-divider .line {
+            width: 40px;
             height: 1px;
             background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            opacity: 0.5;
         }
-        .divider-diamond {
-            color: #d4af37;
-            font-size: 0.8rem;
-            opacity: 0.6;
+        @media (max-width: 600px) {
+            .floral-divider .line { width: 24px; }
+            .floral-divider .flower { font-size: 0.8rem; }
         }
 
         /* ── Subtítulo ── */
         .subtitle {
             font-family: 'Great Vibes', cursive;
-            font-size: 1.9rem;
+            font-size: 1.8rem;
             text-align: center;
             color: #d4af37;
             text-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
             letter-spacing: 2px;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             font-weight: 400;
+        }
+        @media (max-width: 600px) {
+            .subtitle { font-size: 1.5rem; }
         }
 
         /* ── Texto principal ── */
         .body-text {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.3rem;
-            line-height: 1.7;
+            font-size: 1.2rem;
+            line-height: 1.6;
             text-align: center;
             color: #d9cec0;
-            max-width: 620px;
-            margin: 0 auto 20px;
-            padding: 0 10px;
+            max-width: 600px;
+            margin: 0 auto 16px;
+            padding: 0 6px;
             letter-spacing: 0.5px;
         }
         .body-text em {
@@ -228,12 +231,15 @@
             color: #f4e6c9;
             font-weight: 400;
         }
+        @media (max-width: 600px) {
+            .body-text { font-size: 1.05rem; line-height: 1.5; }
+        }
 
         /* ── Fecha ── */
         .date-time {
             text-align: center;
-            margin: 22px 0 20px;
-            padding: 18px 10px;
+            margin: 18px 0 16px;
+            padding: 14px 10px;
             border-top: 1px solid rgba(212, 175, 55, 0.2);
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
             background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.04), transparent);
@@ -241,9 +247,9 @@
         .date-time .day {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: #f4e6c9;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
         }
         .date-time .day span {
@@ -253,39 +259,46 @@
         .date-time .time {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #c9b89e;
             margin-top: 4px;
             letter-spacing: 2px;
         }
         .date-time .time small {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.7;
             letter-spacing: 1px;
+        }
+        @media (max-width: 600px) {
+            .date-time .day { font-size: 1.6rem; letter-spacing: 2px; }
+            .date-time .time { font-size: 1.1rem; }
         }
 
         /* ── Agradecimiento ── */
         .thanks {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             text-align: center;
             color: #b9aa93;
             letter-spacing: 1px;
-            margin: 12px 0 10px;
+            margin: 10px 0 8px;
             font-style: italic;
+        }
+        @media (max-width: 600px) {
+            .thanks { font-size: 1rem; }
         }
 
         /* ── Atentamente ── */
         .attn {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
             color: #b9aa93;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-top: 14px;
+            margin-top: 12px;
             opacity: 0.7;
         }
 
@@ -293,23 +306,24 @@
         .signatures {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             flex-wrap: wrap;
-            margin-top: 12px;
+            margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid rgba(212, 175, 55, 0.1);
         }
         .signature {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.0rem;
+            font-size: 1.9rem;
             color: #d4af37;
             text-shadow: 0 0 30px rgba(212, 175, 55, 0.12);
             letter-spacing: 1px;
+            text-align: center;
         }
         .signature small {
             display: block;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -317,122 +331,15 @@
             margin-top: -2px;
             font-style: normal;
         }
-
-        /* ── Detalles florales decorativos (CSS puro) ── */
-        .floral-divider {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin: 4px 0 2px;
-            opacity: 0.3;
-        }
-        .floral-divider .flower {
-            font-size: 1.0rem;
-            color: #d4af37;
-        }
-        .floral-divider .line {
-            width: 40px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-        }
-
-        /* ── Responsive ── */
         @media (max-width: 600px) {
-            .invitation {
-                padding: 30px 18px 28px;
-                border-radius: 24px;
-            }
-            .invitation::before {
-                inset: 5px;
-                border-radius: 18px;
-            }
-            .title {
-                font-size: 1.7rem;
-                letter-spacing: 2px;
-            }
-            .subtitle {
-                font-size: 1.5rem;
-            }
-            .body-text {
-                font-size: 1.1rem;
-                padding: 0 4px;
-            }
-            .date-time .day {
-                font-size: 1.7rem;
-            }
-            .date-time .time {
-                font-size: 1.2rem;
-            }
-            .corner-deco {
-                font-size: 1.6rem;
-            }
-            .corner-deco.tl {
-                top: 8px;
-                left: 10px;
-            }
-            .corner-deco.tr {
-                top: 8px;
-                right: 10px;
-            }
-            .corner-deco.bl {
-                bottom: 8px;
-                left: 10px;
-            }
-            .corner-deco.br {
-                bottom: 8px;
-                right: 10px;
-            }
-            .seal-icon {
-                font-size: 2.4rem;
-            }
-            .signatures {
-                gap: 20px;
-                flex-direction: column;
-                align-items: center;
-            }
-            .signature {
-                font-size: 1.7rem;
-            }
-            .divider {
-                max-width: 200px;
-            }
+            .signatures { gap: 16px; flex-direction: column; align-items: center; }
+            .signature { font-size: 1.6rem; }
         }
 
-        @media (max-width: 400px) {
-            .title {
-                font-size: 1.4rem;
-            }
-            .body-text {
-                font-size: 1.0rem;
-            }
-            .date-time .day {
-                font-size: 1.4rem;
-            }
-            .invitation {
-                padding: 20px 12px 20px;
-            }
-        }
-
-        /* ── Animación sutil de brillo ── */
+        /* ── Animación de brillo ── */
         @keyframes shimmer {
-            0% {
-                background-position: -200% center;
-            }
-            100% {
-                background-position: 200% center;
-            }
-        }
-        .shimmer-gold {
-            background: linear-gradient(90deg,
-                    transparent 0%,
-                    rgba(212, 175, 55, 0.04) 25%,
-                    rgba(212, 175, 55, 0.10) 50%,
-                    rgba(212, 175, 55, 0.04) 75%,
-                    transparent 100%);
-            background-size: 200% 100%;
-            animation: shimmer 8s linear infinite;
-            border-radius: 12px;
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
         .shimmer-gold-light {
             background: linear-gradient(90deg,
@@ -443,6 +350,16 @@
                     transparent 100%);
             background-size: 200% 100%;
             animation: shimmer 12s linear infinite;
+        }
+
+        /* ── Ajustes específicos para móviles muy pequeños ── */
+        @media (max-width: 400px) {
+            .invitation { padding: 24px 14px 20px; }
+            .body-text { font-size: 0.95rem; }
+            .date-time .day { font-size: 1.3rem; }
+            .date-time .time { font-size: 1rem; }
+            .signature { font-size: 1.4rem; }
+            .corner-deco { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -519,7 +436,7 @@
         </div>
 
         <!-- detalle final -->
-        <div class="floral-divider" style="margin-top:14px; opacity:0.15;">
+        <div class="floral-divider" style="margin-top:12px; opacity:0.15;">
             <span class="line"></span>
             <span class="flower">✤</span>
             <span class="line"></span>
@@ -530,12 +447,15 @@
     <script>
         (function() {
             const container = document.getElementById('particles');
+            // Determinar cantidad de partículas según el ancho de pantalla
+            const isMobile = window.innerWidth < 600;
+            const count = isMobile ? 35 : 80;
+
             const symbols = [
                 '✦', '✧', '★', '☆', '✶',
                 '🌸', '🌺', '✿', '❀', '✤', '❋',
                 '✽', '✾', '✼'
             ];
-            const count = 80;
 
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
@@ -544,7 +464,8 @@
                 const symbol = symbols[Math.floor(Math.random() * symbols.length)];
                 el.textContent = symbol;
 
-                const size = 0.8 + Math.random() * 1.6;
+                // Tamaño más pequeño en móvil
+                const size = isMobile ? 0.7 + Math.random() * 1.0 : 0.8 + Math.random() * 1.6;
                 el.style.fontSize = size + 'rem';
 
                 const x = Math.random() * 100;
@@ -552,21 +473,27 @@
                 el.style.left = x + '%';
                 el.style.top = y + '%';
 
+                // En móvil colores más suaves y sin sombra (ya quitada por CSS)
                 const hue = 40 + Math.random() * 15;
-                const sat = 60 + Math.random() * 30;
-                const lig = 55 + Math.random() * 30;
+                const sat = 50 + Math.random() * 30;
+                const lig = 50 + Math.random() * 30;
                 el.style.color = `hsl(${hue}, ${sat}%, ${lig}%)`;
-                el.style.textShadow = `0 0 ${10 + Math.random() * 30}px rgba(212, 175, 55, ${0.2 + Math.random() * 0.4})`;
 
-                const tx = (Math.random() - 0.5) * 600;
-                const ty = (Math.random() - 0.5) * 600;
+                // Solo sombra en escritorio (en móvil se quita con CSS)
+                if (!isMobile) {
+                    el.style.textShadow = `0 0 ${10 + Math.random() * 20}px rgba(212, 175, 55, ${0.2 + Math.random() * 0.3})`;
+                }
+
+                const tx = (Math.random() - 0.5) * (isMobile ? 300 : 600);
+                const ty = (Math.random() - 0.5) * (isMobile ? 300 : 600);
                 el.style.setProperty('--tx', tx + 'px');
                 el.style.setProperty('--ty', ty + 'px');
 
-                const duration = 10 + Math.random() * 20;
+                // Duración más corta en móvil para que se muevan más rápido y no se noten tanto
+                const duration = isMobile ? 8 + Math.random() * 12 : 10 + Math.random() * 20;
                 el.style.animationDuration = duration + 's';
 
-                const delay = Math.random() * 15;
+                const delay = Math.random() * (isMobile ? 10 : 15);
                 el.style.animationDelay = delay + 's';
 
                 const rot = Math.random() * 360;

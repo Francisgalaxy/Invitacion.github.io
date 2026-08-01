@@ -17,7 +17,9 @@
 
         body {
             min-height: 100vh;
+            /* Centrado vertical con flex, pero permitiendo scroll */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background: #0b0014;
@@ -27,9 +29,10 @@
                 radial-gradient(ellipse at 50% 20%, #1f0a30 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 80%, #1f0a30 0%, transparent 50%);
             font-family: 'Cormorant Garamond', serif;
-            padding: 20px;
+            padding: 30px 20px;
+            /* Permite scroll cuando el contenido excede la altura */
+            overflow-y: auto;
             position: relative;
-            overflow: hidden;
         }
 
         /* ── Contenedor de partículas (fondo animado) ── */
@@ -52,8 +55,6 @@
             user-select: none;
         }
 
-        /* Cada partícula tendrá su propia duración y retraso asignados desde JS,
-           pero la animación base es la misma */
         @keyframes floatParticle {
             0% {
                 transform: translate(0, 0) rotate(0deg) scale(1);
@@ -87,6 +88,8 @@
                 0 0 60px rgba(212, 175, 55, 0.06);
             transition: all 0.3s ease;
             backdrop-filter: blur(2px);
+            /* Evita que la tarjeta se encoja en flex */
+            flex-shrink: 0;
         }
 
         .invitation::before {
@@ -528,62 +531,49 @@
         (function() {
             const container = document.getElementById('particles');
             const symbols = [
-                '✦', '✧', '★', '☆', '✶', // estrellas
-                '🌸', '🌺', '✿', '❀', '✤', '❋', // flores
+                '✦', '✧', '★', '☆', '✶',
+                '🌸', '🌺', '✿', '❀', '✤', '❋',
                 '✽', '✾', '✼'
             ];
-            const count = 80; // cantidad de partículas
+            const count = 80;
 
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
                 el.className = 'particle';
 
-                // Seleccionar símbolo aleatorio
                 const symbol = symbols[Math.floor(Math.random() * symbols.length)];
                 el.textContent = symbol;
 
-                // Tamaño aleatorio entre 0.8rem y 2.2rem
                 const size = 0.8 + Math.random() * 1.6;
                 el.style.fontSize = size + 'rem';
 
-                // Posición inicial aleatoria en toda la pantalla
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 el.style.left = x + '%';
                 el.style.top = y + '%';
 
-                // Color: dorado con variaciones (más claro o más cálido)
-                const hue = 40 + Math.random() * 15; // 40-55
+                const hue = 40 + Math.random() * 15;
                 const sat = 60 + Math.random() * 30;
                 const lig = 55 + Math.random() * 30;
                 el.style.color = `hsl(${hue}, ${sat}%, ${lig}%)`;
                 el.style.textShadow = `0 0 ${10 + Math.random() * 30}px rgba(212, 175, 55, ${0.2 + Math.random() * 0.4})`;
 
-                // Asignar desplazamiento aleatorio para la animación (tx, ty)
-                const tx = (Math.random() - 0.5) * 600; // px
+                const tx = (Math.random() - 0.5) * 600;
                 const ty = (Math.random() - 0.5) * 600;
                 el.style.setProperty('--tx', tx + 'px');
                 el.style.setProperty('--ty', ty + 'px');
 
-                // Duración entre 10s y 25s
                 const duration = 10 + Math.random() * 20;
                 el.style.animationDuration = duration + 's';
 
-                // Retraso aleatorio hasta 15s
                 const delay = Math.random() * 15;
                 el.style.animationDelay = delay + 's';
 
-                // Rotación inicial aleatoria
                 const rot = Math.random() * 360;
                 el.style.transform = `rotate(${rot}deg)`;
 
                 container.appendChild(el);
             }
-
-            // Opcional: regenerar partículas cada cierto tiempo para que nunca se detengan
-            // pero como tienen delay y duración variable, siempre habrá movimiento.
-            // Si se quiere un efecto continuo, se puede reiniciar la animación periódicamente.
-            // Pero con los delays y duraciones variables, el efecto es continuo.
         })();
     </script>
 

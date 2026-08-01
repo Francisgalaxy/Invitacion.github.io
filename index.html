@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitación de Boda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet" />
+    <title>Invitación de Boda - Onyx & Eclipse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Great+Vibes&display=swap" rel="stylesheet" />
     <style>
-        /* RESET y estilos base */
+        /* ── Reset & base ── */
         * {
             margin: 0;
             padding: 0;
@@ -16,281 +18,573 @@
         body {
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background-color: #A2C1EB;
-            font-family: 'Quicksand', sans-serif;
+            align-items: center;
+            background: #0b0014;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, #2a1040 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, #2a1040 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 20%, #1f0a30 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, #1f0a30 0%, transparent 50%);
+            font-family: 'Cormorant Garamond', serif;
             padding: 20px;
-            background-size: 150px 150px;
-            background-repeat: repeat;
-        }
-
-        /* Tarjeta principal */
-        .invitation-card {
-            max-width: 700px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            border-radius: 28px;
-            padding: 50px 45px;
-            box-shadow: 0 12px 40px rgba(140, 170, 200, 0.15), 0 4px 16px rgba(140, 170, 200, 0.08);
-            border: 1px solid rgba(210, 225, 240, 0.4);
-            transition: all 0.2s ease;
             position: relative;
-            z-index: 2;
+            overflow: hidden;
         }
 
-        /* Decoración superior */
-        .divider-flowers {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
-            color: #b3ccdd;
-            font-size: 20px;
-            letter-spacing: 6px;
-        }
-        .divider-flowers .line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #c4d7e8, transparent);
-        }
-        .divider-flowers .flower-icon {
-            font-size: 22px;
-            color: #b8d0de;
-            opacity: 0.7;
+        /* ── Contenedor de partículas (fondo animado) ── */
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        /* Título */
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
+        .particle {
+            position: absolute;
+            font-size: 1.2rem;
+            color: #d4af37;
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: floatParticle linear infinite;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            user-select: none;
+        }
+
+        /* Cada partícula tendrá su propia duración y retraso asignados desde JS,
+           pero la animación base es la misma */
+        @keyframes floatParticle {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* ── Contenedor principal ── */
+        .invitation {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            width: 100%;
+            background: linear-gradient(145deg, #160321 0%, #220b38 40%, #1a0628 100%);
+            border: 2px solid rgba(212, 175, 55, 0.35);
+            border-radius: 32px;
+            padding: 48px 40px 40px;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(212, 175, 55, 0.15) inset,
+                0 0 60px rgba(212, 175, 55, 0.06);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        .invitation::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 24px;
+            pointer-events: none;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.04);
+        }
+
+        /* ── Decoración de esquinas florales ── */
+        .corner-deco {
+            position: absolute;
             font-size: 2.4rem;
-            text-align: center;
-            color: #2c4a5e;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            margin-bottom: 8px;
-        }
-        .title-sub {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 400;
-            font-size: 1rem;
-            text-align: center;
-            color: #7a9bb3;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-        }
-
-        /* Texto de invitación */
-        .invitation-text {
-            font-weight: 300;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #3e5a6b;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .invitation-text strong {
-            font-weight: 500;
-            color: #2c4a5e;
-        }
-
-        /* Píldora de horario (usada también para la fecha) */
-        .schedule {
-            background: rgba(207, 225, 239, 0.25);
-            border-radius: 40px;
-            padding: 14px 28px;
-            display: inline-block;
-            margin: 12px auto 20px;
-            font-weight: 400;
-            font-size: 1.05rem;
-            color: #2c4a5e;
-            border: 1px solid rgba(190, 212, 228, 0.3);
-            letter-spacing: 0.3px;
-            font-family: 'Quicksand', sans-serif; /* mismo que el body */
-        }
-        .schedule .time {
-            font-weight: 600;
-            color: #1f3a4a;
-        }
-        /* Pequeño ajuste para separar la fecha de la hora */
-        .date-schedule {
-            margin-bottom: 8px;
-        }
-
-        /* Firma */
-        .signature {
-            margin-top: 32px;
-            text-align: center;
-            font-weight: 300;
-            font-size: 1.05rem;
-            color: #4d6f84;
-            letter-spacing: 1px;
-        }
-        .signature .names {
-            display: block;
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            font-size: 1.3rem;
-            color: #2c4a5e;
-            margin-top: 6px;
+            color: rgba(212, 175, 55, 0.25);
+            line-height: 1;
+            pointer-events: none;
+            font-family: 'Great Vibes', cursive;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
             letter-spacing: 2px;
         }
+        .corner-deco.tl {
+            top: 14px;
+            left: 18px;
+            transform: rotate(0deg);
+        }
+        .corner-deco.tr {
+            top: 14px;
+            right: 18px;
+            transform: rotate(90deg);
+        }
+        .corner-deco.bl {
+            bottom: 14px;
+            left: 18px;
+            transform: rotate(-90deg);
+        }
+        .corner-deco.br {
+            bottom: 14px;
+            right: 18px;
+            transform: rotate(180deg);
+        }
 
-        /* Separador inferior */
-        .divider-bottom {
-            margin-top: 28px;
+        /* ── Sello / escudo superior ── */
+        .seal {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .seal-icon {
+            font-size: 3.2rem;
+            color: #d4af37;
+            text-shadow:
+                0 0 30px rgba(212, 175, 55, 0.3),
+                0 0 60px rgba(212, 175, 55, 0.1);
+            background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.08), transparent 70%);
+            padding: 0 20px;
+            border-radius: 50%;
+            line-height: 1.2;
+            letter-spacing: 6px;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* ── Título ── */
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2.5rem;
             text-align: center;
-            color: #c4d7e8;
-            font-size: 18px;
-            letter-spacing: 4px;
+            color: #f4e6c9;
+            text-shadow:
+                0 2px 30px rgba(212, 175, 55, 0.2),
+                0 0 60px rgba(212, 175, 55, 0.05);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            position: relative;
+        }
+        .title span {
+            color: #d4af37;
+            text-shadow:
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 60px rgba(212, 175, 55, 0.1);
+        }
+
+        /* línea divisora dorada */
+        .divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 12px auto 14px;
+            max-width: 320px;
+        }
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            opacity: 0.5;
+        }
+        .divider-diamond {
+            color: #d4af37;
+            font-size: 0.8rem;
             opacity: 0.6;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .invitation-card {
-                padding: 30px 22px;
-                border-radius: 20px;
-            }
-            .title {
-                font-size: 1.8rem;
-            }
-            .invitation-text {
-                font-size: 1rem;
-            }
-            .schedule {
-                font-size: 0.95rem;
-                padding: 10px 20px;
-            }
-            .signature .names {
-                font-size: 1.1rem;
-            }
-            .divider-flowers {
-                font-size: 16px;
-                gap: 8px;
-            }
+        /* ── Subtítulo ── */
+        .subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.9rem;
+            text-align: center;
+            color: #d4af37;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            font-weight: 400;
         }
-        @media (max-width: 400px) {
-            .invitation-card {
-                padding: 22px 16px;
+
+        /* ── Texto principal ── */
+        .body-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            text-align: center;
+            color: #d9cec0;
+            max-width: 620px;
+            margin: 0 auto 20px;
+            padding: 0 10px;
+            letter-spacing: 0.5px;
+        }
+        .body-text em {
+            font-style: italic;
+            color: #f4e6c9;
+            font-weight: 400;
+        }
+
+        /* ── Fecha ── */
+        .date-time {
+            text-align: center;
+            margin: 22px 0 20px;
+            padding: 18px 10px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.04), transparent);
+        }
+        .date-time .day {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #f4e6c9;
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+        .date-time .day span {
+            color: #d4af37;
+            font-weight: 700;
+        }
+        .date-time .time {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 1.4rem;
+            color: #c9b89e;
+            margin-top: 4px;
+            letter-spacing: 2px;
+        }
+        .date-time .time small {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        /* ── Agradecimiento ── */
+        .thanks {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 1.15rem;
+            text-align: center;
+            color: #b9aa93;
+            letter-spacing: 1px;
+            margin: 12px 0 10px;
+            font-style: italic;
+        }
+
+        /* ── Atentamente ── */
+        .attn {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #b9aa93;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 14px;
+            opacity: 0.7;
+        }
+
+        /* ── Firmas ── */
+        .signatures {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.0rem;
+            color: #d4af37;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.12);
+            letter-spacing: 1px;
+        }
+        .signature small {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.65rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #8f7e66;
+            margin-top: -2px;
+            font-style: normal;
+        }
+
+        /* ── Detalles florales decorativos (CSS puro) ── */
+        .floral-divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 2px;
+            opacity: 0.3;
+        }
+        .floral-divider .flower {
+            font-size: 1.0rem;
+            color: #d4af37;
+        }
+        .floral-divider .line {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .invitation {
+                padding: 30px 18px 28px;
+                border-radius: 24px;
+            }
+            .invitation::before {
+                inset: 5px;
+                border-radius: 18px;
             }
             .title {
+                font-size: 1.7rem;
+                letter-spacing: 2px;
+            }
+            .subtitle {
                 font-size: 1.5rem;
             }
-            .schedule {
-                font-size: 0.9rem;
+            .body-text {
+                font-size: 1.1rem;
+                padding: 0 4px;
             }
+            .date-time .day {
+                font-size: 1.7rem;
+            }
+            .date-time .time {
+                font-size: 1.2rem;
+            }
+            .corner-deco {
+                font-size: 1.6rem;
+            }
+            .corner-deco.tl {
+                top: 8px;
+                left: 10px;
+            }
+            .corner-deco.tr {
+                top: 8px;
+                right: 10px;
+            }
+            .corner-deco.bl {
+                bottom: 8px;
+                left: 10px;
+            }
+            .corner-deco.br {
+                bottom: 8px;
+                right: 10px;
+            }
+            .seal-icon {
+                font-size: 2.4rem;
+            }
+            .signatures {
+                gap: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .signature {
+                font-size: 1.7rem;
+            }
+            .divider {
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 1.4rem;
+            }
+            .body-text {
+                font-size: 1.0rem;
+            }
+            .date-time .day {
+                font-size: 1.4rem;
+            }
+            .invitation {
+                padding: 20px 12px 20px;
+            }
+        }
+
+        /* ── Animación sutil de brillo ── */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        .shimmer-gold {
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(212, 175, 55, 0.04) 25%,
+                    rgba(212, 175, 55, 0.10) 50%,
+                    rgba(212, 175, 55, 0.04) 75%,
+                    transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 8s linear infinite;
+            border-radius: 12px;
+        }
+        .shimmer-gold-light {
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(212, 175, 55, 0.02) 30%,
+                    rgba(212, 175, 55, 0.06) 50%,
+                    rgba(212, 175, 55, 0.02) 70%,
+                    transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 12s linear infinite;
         }
     </style>
 </head>
 <body>
 
-    <div class="invitation-card">
+    <!-- Contenedor de partículas animadas -->
+    <div id="particles"></div>
 
-        <!-- Divisor superior -->
-        <div class="divider-flowers">
-            <span class="line"></span>
-            <span class="flower-icon">❀</span>
-            <span class="flower-icon">✿</span>
-            <span class="flower-icon">❀</span>
-            <span class="line"></span>
+    <div class="invitation shimmer-gold-light">
+
+        <!-- Esquinas florales -->
+        <div class="corner-deco tl">❧</div>
+        <div class="corner-deco tr">❧</div>
+        <div class="corner-deco bl">❧</div>
+        <div class="corner-deco br">❧</div>
+
+        <!-- Sello -->
+        <div class="seal">
+            <div class="seal-icon">✦ ✧ ✦</div>
         </div>
 
         <!-- Título -->
-        <h1 class="title">Ceremonia que unirá dos familias</h1>
-        <div class="title-sub">— unión de corazones —</div>
+        <h1 class="title">
+            Ceremonia que <span>unirá</span> dos familias
+        </h1>
 
-        <!-- Texto de invitación -->
-        <p class="invitation-text">
-            El destino tejió sus hilos y el amor unió sus caminos.<br />
-            Con inmensa alegría y gratitud, les invitamos cordialmente a ser parte de la unión de dos almas que se complementan y dos familias que se entrelazan.
-        </p>
+        <!-- Divisor floral -->
+        <div class="floral-divider">
+            <span class="line"></span>
+            <span class="flower">✿</span>
+            <span class="line"></span>
+        </div>
 
-        <!-- Fecha y hora con el mismo estilo de fondo -->
-        <div style="text-align: center;">
-            <div class="schedule date-schedule">Domingo 2 de agosto del 2026</div>
-            <div class="schedule">
-                ⏤ <span class="time">7:00 pm</span> · hora Colombia ⏤
+        <!-- Subtítulo -->
+        <div class="subtitle">unión de corazones</div>
+
+        <!-- Texto principal -->
+        <div class="body-text">
+            <em>El destino tejió sus hilos y el amor unió sus caminos</em>.
+            <br /><br />
+            Con inmensa alegría y gratitud, les invitamos cordialmente a ser parte de la
+            <em>unión de dos almas que se complementan</em> y
+            <em>dos familias que se entrelazan</em>.
+        </div>
+
+        <!-- Fecha y hora -->
+        <div class="date-time">
+            <div class="day">
+                Domingo <span>2</span> de agosto del <span>2026</span>
             </div>
-            <p class="invitation-text" style="font-size: 0.95rem; margin-top: 6px;">
-                Agradeceremos su asistencia y permanencia en dicho evento
-            </p>
+            <div class="time">
+                7:00 pm <small>· hora Colombia</small>
+            </div>
         </div>
 
-        <!-- Firma -->
-        <div class="signature">
-            Atentamente,
-            <span class="names">Onyx D Santi's y Eclipse Morningstar Starfield </span>
+        <!-- Agradecimiento -->
+        <div class="thanks">
+            ✧ Agradeceremos su asistencia y permanencia en dicho evento ✧
         </div>
 
-        <!-- Divisor inferior -->
-        <div class="divider-bottom">✦ ✦ ✦</div>
+        <!-- Atentamente -->
+        <div class="attn">— Atentamente —</div>
+
+        <!-- Firmas -->
+        <div class="signatures">
+            <div class="signature">
+                Onyx D Santi's
+                <small>familia Santi's</small>
+            </div>
+            <div class="signature">
+                Eclipse Spirit Morningstar
+                <small>familia Morningstar</small>
+            </div>
+        </div>
+
+        <!-- detalle final -->
+        <div class="floral-divider" style="margin-top:14px; opacity:0.15;">
+            <span class="line"></span>
+            <span class="flower">✤</span>
+            <span class="line"></span>
+        </div>
 
     </div>
 
     <script>
-        // SVG con patrón floral en colores fríos y pastel
-        const svgPattern = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
-                <defs>
-                    <g id="flor1">
-                        <circle cx="0" cy="-12" r="7" fill="#d4e9e2" opacity="0.45"/>
-                        <circle cx="11" cy="-4" r="7" fill="#d4e9e2" opacity="0.45"/>
-                        <circle cx="7" cy="10" r="7" fill="#d4e9e2" opacity="0.45"/>
-                        <circle cx="-7" cy="10" r="7" fill="#d4e9e2" opacity="0.45"/>
-                        <circle cx="-11" cy="-4" r="7" fill="#d4e9e2" opacity="0.45"/>
-                        <circle cx="0" cy="0" r="4" fill="#f5e6e8" opacity="0.6"/>
-                    </g>
-                    <g id="flor2">
-                        <circle cx="0" cy="-10" r="6" fill="#e6d3e6" opacity="0.4"/>
-                        <circle cx="9" cy="-3" r="6" fill="#e6d3e6" opacity="0.4"/>
-                        <circle cx="6" cy="8" r="6" fill="#e6d3e6" opacity="0.4"/>
-                        <circle cx="-6" cy="8" r="6" fill="#e6d3e6" opacity="0.4"/>
-                        <circle cx="-9" cy="-3" r="6" fill="#e6d3e6" opacity="0.4"/>
-                        <circle cx="0" cy="0" r="3.5" fill="#c5d9e8" opacity="0.6"/>
-                    </g>
-                    <g id="flor3">
-                        <circle cx="0" cy="-9" r="5.5" fill="#f5e6e8" opacity="0.4"/>
-                        <circle cx="8" cy="-2" r="5.5" fill="#f5e6e8" opacity="0.4"/>
-                        <circle cx="5" cy="7" r="5.5" fill="#f5e6e8" opacity="0.4"/>
-                        <circle cx="-5" cy="7" r="5.5" fill="#f5e6e8" opacity="0.4"/>
-                        <circle cx="-8" cy="-2" r="5.5" fill="#f5e6e8" opacity="0.4"/>
-                        <circle cx="0" cy="0" r="3" fill="#d4e9e2" opacity="0.6"/>
-                    </g>
-                    <g id="hoja">
-                        <ellipse cx="0" cy="0" rx="6" ry="3" fill="#d4e9e2" opacity="0.25" transform="rotate(-30)"/>
-                    </g>
-                </defs>
+        (function() {
+            const container = document.getElementById('particles');
+            const symbols = [
+                '✦', '✧', '★', '☆', '✶', // estrellas
+                '🌸', '🌺', '✿', '❀', '✤', '❋', // flores
+                '✽', '✾', '✼'
+            ];
+            const count = 80; // cantidad de partículas
 
-                <use href="#flor1" x="25" y="25" transform="scale(0.8) rotate(0, 25, 25)"/>
-                <use href="#flor2" x="100" y="30" transform="scale(0.9) rotate(20, 100, 30)"/>
-                <use href="#flor3" x="70" y="100" transform="scale(0.7) rotate(-15, 70, 100)"/>
-                <use href="#flor1" x="10" y="110" transform="scale(0.6) rotate(40, 10, 110)"/>
-                <use href="#flor2" x="120" y="110" transform="scale(0.8) rotate(10, 120, 110)"/>
-                <use href="#flor3" x="70" y="15" transform="scale(0.7) rotate(-30, 70, 15)"/>
-                <use href="#flor1" x="130" y="70" transform="scale(0.6) rotate(25, 130, 70)"/>
-                <use href="#flor2" x="20" y="80" transform="scale(0.8) rotate(-10, 20, 80)"/>
-                <use href="#flor3" x="45" y="135" transform="scale(0.65) rotate(55, 45, 135)"/>
-                <use href="#flor1" x="115" y="135" transform="scale(0.7) rotate(-20, 115, 135)"/>
-                <use href="#flor2" x="140" y="20" transform="scale(0.55) rotate(35, 140, 20)"/>
-                <use href="#flor3" x="5" y="45" transform="scale(0.6) rotate(10, 5, 45)"/>
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'particle';
 
-                <use href="#hoja" x="45" y="45" transform="rotate(20, 45, 45)"/>
-                <use href="#hoja" x="110" y="80" transform="rotate(-40, 110, 80)"/>
-                <use href="#hoja" x="30" y="95" transform="rotate(70, 30, 95)"/>
-                <use href="#hoja" x="130" y="40" transform="rotate(-15, 130, 40)"/>
-            </svg>
-        `;
+                // Seleccionar símbolo aleatorio
+                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                el.textContent = symbol;
 
-        const encoded = encodeURIComponent(svgPattern);
-        document.body.style.backgroundImage = `url("data:image/svg+xml,${encoded}")`;
-        document.body.style.backgroundSize = '150px 150px';
-        document.body.style.backgroundRepeat = 'repeat';
+                // Tamaño aleatorio entre 0.8rem y 2.2rem
+                const size = 0.8 + Math.random() * 1.6;
+                el.style.fontSize = size + 'rem';
+
+                // Posición inicial aleatoria en toda la pantalla
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                el.style.left = x + '%';
+                el.style.top = y + '%';
+
+                // Color: dorado con variaciones (más claro o más cálido)
+                const hue = 40 + Math.random() * 15; // 40-55
+                const sat = 60 + Math.random() * 30;
+                const lig = 55 + Math.random() * 30;
+                el.style.color = `hsl(${hue}, ${sat}%, ${lig}%)`;
+                el.style.textShadow = `0 0 ${10 + Math.random() * 30}px rgba(212, 175, 55, ${0.2 + Math.random() * 0.4})`;
+
+                // Asignar desplazamiento aleatorio para la animación (tx, ty)
+                const tx = (Math.random() - 0.5) * 600; // px
+                const ty = (Math.random() - 0.5) * 600;
+                el.style.setProperty('--tx', tx + 'px');
+                el.style.setProperty('--ty', ty + 'px');
+
+                // Duración entre 10s y 25s
+                const duration = 10 + Math.random() * 20;
+                el.style.animationDuration = duration + 's';
+
+                // Retraso aleatorio hasta 15s
+                const delay = Math.random() * 15;
+                el.style.animationDelay = delay + 's';
+
+                // Rotación inicial aleatoria
+                const rot = Math.random() * 360;
+                el.style.transform = `rotate(${rot}deg)`;
+
+                container.appendChild(el);
+            }
+
+            // Opcional: regenerar partículas cada cierto tiempo para que nunca se detengan
+            // pero como tienen delay y duración variable, siempre habrá movimiento.
+            // Si se quiere un efecto continuo, se puede reiniciar la animación periódicamente.
+            // Pero con los delays y duraciones variables, el efecto es continuo.
+        })();
     </script>
 
 </body>
